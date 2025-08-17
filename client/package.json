@@ -10,9 +10,16 @@
     "dev": "node --watch server.js"
   },
   "dependencies": {
+    "dotenv": "^17.2.1",
     "express": "^4.18.2"
   },
-  "keywords": ["mcp", "weather", "client", "web", "cli"],
+  "keywords": [
+    "mcp",
+    "weather",
+    "client",
+    "web",
+    "cli"
+  ],
   "author": "",
   "license": "MIT"
 }
