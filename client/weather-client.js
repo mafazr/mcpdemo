@@ -27,6 +27,17 @@ class MCPWeatherClient {
                 }
             });
         }
+        
+        // Add smooth scrolling for better UX
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        // Add keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideWeatherCard();
+                hideError();
+            }
+        });
     }
 
     async getWeatherFromMCP(location, units = 'metric') {
@@ -191,6 +202,21 @@ function displayWeather(weatherData, aiDescription, units) {
     const tempUnit = units === 'metric' ? '°C' : units === 'imperial' ? '°F' : 'K';
     const windUnit = units === 'metric' ? 'm/s' : units === 'imperial' ? 'mph' : 'm/s';
     const visibilityUnit = 'km';
+    
+    // Add a subtle entrance animation for each element
+    const elements = ['locationName', 'locationCountry', 'temperature', 'feelsLike', 'humidity', 'windSpeed', 'visibility', 'description'];
+    elements.forEach((id, index) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        }
+    });
 
     // Update location info
     document.getElementById('locationName').textContent = weatherData.location.name;
@@ -235,13 +261,42 @@ function displayWeather(weatherData, aiDescription, units) {
 
 function showLoading(show) {
     const loading = document.getElementById('loading');
-    loading.style.display = show ? 'block' : 'none';
+    if (show) {
+        loading.style.display = 'block';
+        // Add a subtle pulse animation to the loading text
+        const loadingText = loading.querySelector('p');
+        if (loadingText) {
+            loadingText.style.animation = 'pulse 2s infinite';
+        }
+    } else {
+        loading.style.display = 'none';
+        // Reset animation
+        const loadingText = loading.querySelector('p');
+        if (loadingText) {
+            loadingText.style.animation = 'none';
+        }
+    }
 }
 
 function showWeatherCard() {
-    const weatherCard = document.getElementById('weatherCard');
-    weatherCard.classList.add('show');
-}
+        const weatherCard = document.getElementById('weatherCard');
+        weatherCard.classList.add('show');
+        
+        // Add a subtle glow effect to the weather card
+        weatherCard.style.boxShadow = '0 20px 40px rgba(99, 102, 241, 0.2)';
+        
+        // Animate the forecast items with staggered timing
+        const forecastItems = document.querySelectorAll('.forecast-item');
+        forecastItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                item.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, index * 150);
+        });
+    }
 
 function hideWeatherCard() {
     const weatherCard = document.getElementById('weatherCard');
@@ -261,7 +316,7 @@ function hideError() {
 
 // Add some sample cities for quick testing
 function addSampleCities() {
-    const sampleCities = ['London', 'New York', 'Tokyo', 'Paris', 'Berlin', 'Rome', 'Madrid', 'Amsterdam'];
+    const sampleCities = ['Singapore', 'Kuala Lumpur', 'Hanoi', 'Phuket', 'Tokyo', 'London', 'New York', 'Paris', 'Berlin', 'Rome', 'Madrid', 'Amsterdam', 'Vienna', 'Prague', 'Budapest', 'Warsaw', 'Moscow', 'Beijing', 'Seoul', 'Sydney', 'Toronto', 'Mexico City', 'São Paulo', 'Buenos Aires', 'Cape Town', 'Cairo', 'Mumbai', 'Bangkok', 'Jakarta', 'Manila'];
     const cityInput = document.getElementById('cityInput');
     
     if (cityInput) {
