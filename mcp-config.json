@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "weather": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "OpenAIAPI_KEY": "your_openai_api_key_here",
+        "OpenWeatherMapAPI_KEY": "your_openweathermap_api_key_here"
+      }
+    }
+  }
+}
